@@ -49,6 +49,8 @@
 				"RemovingDuplicates filter(!(isNull(age)) && age<120) ~> RemovingBlankAge",
 				"RemovingBlankAge sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['finalemployee.csv'],",
+				"     truncate: true,",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
