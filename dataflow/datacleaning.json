@@ -12,7 +12,15 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText5",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "RemovingDuplicates"
@@ -40,7 +48,14 @@
 				"     skipInitialLoad: false) ~> source1",
 				"source1 aggregate(groupBy(employee_id),",
 				"     each(match(name!='employee_id'), $$ = first($$))) ~> RemovingDuplicates",
-				"RemovingDuplicates filter(!(isNull(age)) && age<120) ~> RemovingBlankAge"
+				"RemovingDuplicates filter(!(isNull(age)) && age<120) ~> RemovingBlankAge",
+				"RemovingBlankAge sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
