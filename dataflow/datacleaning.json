@@ -34,7 +34,10 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false) ~> source1",
 				"source1 aggregate(groupBy(employee_id),",
 				"     each(match(name!='employee_id'), $$ = first($$))) ~> RemovingDuplicates",
 				"RemovingDuplicates filter(!(isNull(age)) && age<120) ~> RemovingBlankAge"
