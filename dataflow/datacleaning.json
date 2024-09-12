@@ -1,0 +1,48 @@
+{
+	"name": "datacleaning",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "RemovingDuplicates"
+				},
+				{
+					"name": "RemovingBlankAge"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          employee_id as integer,",
+				"          employee_name as string,",
+				"          department as string,",
+				"          state as string,",
+				"          salary as integer,",
+				"          age as integer,",
+				"          bonus as integer,",
+				"          joining_date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 aggregate(groupBy(employee_id),",
+				"     each(match(name!='employee_id'), $$ = first($$))) ~> RemovingDuplicates",
+				"RemovingDuplicates filter(!(isNull(age)) && age<120) ~> RemovingBlankAge",
+				"RemovingBlankAge derive(Date = toString(joining_date,'MM/dd/yyyy')) ~> derivedColumn1"
+			]
+		}
+	}
+}
