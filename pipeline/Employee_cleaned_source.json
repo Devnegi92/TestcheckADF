@@ -3,33 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "datacleaning",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "datacleaning",
-						"type": "DataFlowReference"
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine",
-					"continuationSettings": {
-						"customizedCheckpointKey": "56497934-e6e8-49ad-8fe1-13a8e5b2a4c2"
-					}
-				}
-			},
-			{
 				"name": "Copy data1",
 				"type": "Copy",
 				"dependsOn": [
@@ -93,6 +66,33 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "datacleaning",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "datacleaning",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine",
+					"continuationSettings": {
+						"customizedCheckpointKey": "25882c2e-b21b-46c8-becd-a2678d07df62"
+					}
+				}
 			}
 		],
 		"annotations": []
